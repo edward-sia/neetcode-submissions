@@ -1,0 +1,29 @@
+class Solution {
+    /**
+     * @param {number[]} nums
+     * @param {number} target
+     * @returns {number[][]}
+     */
+    combinationSum(nums: number[], target: number): number[][] {
+        let res = []
+
+        this.helper(nums, target, 0, [], res)
+        return res
+    }
+
+    private helper(nums: number[], remaining: number, start: number, curr: number[], res: number[][]) {
+        for (let i = start ; i < nums.length ; i++) {
+            if (nums[i] > remaining)
+                continue
+            curr.push(nums[i])
+            let newRemaining = remaining - nums[i]
+
+            if (newRemaining === 0) {
+                res.push([...curr])
+            } else if (newRemaining > 0) {
+                this.helper(nums, newRemaining, i, curr, res)
+            }
+            curr.pop()
+        }
+    }
+}
